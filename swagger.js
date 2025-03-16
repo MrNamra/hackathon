@@ -10,6 +10,16 @@ const options = {
       description: "API documentation for Hackathon project",
     },
     servers: [{ url: "http://localhost:3000" }],
+
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   // ✅ Added controllers directory so Swagger can find documentation
   apis: ["./routes/*.js", "./controllers/*.js"],

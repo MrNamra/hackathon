@@ -63,7 +63,7 @@ const addTrafficData = async (req, res) => {
             public_transport_usage,
             weather_temperature
         });
-        return res.status(200).json({ status: true, message: "Added Traffic Data", data });
+        return res.status(200).json({ status: true, message: "Added Traffic Data" });
     } catch (err) {
         console.log("IotController, addTrafficData Error: ", err)
         return res.status(500).json({ status: false, message: "Internal Server Error!", err });
@@ -116,10 +116,10 @@ const addHelthData = async (req, res) => {
         social_media_alerts
     } = req.body;
     try {
-        if(!vaccination_status || !weather) {
+        if(!vaccination_status) {
             return res.status(400).json({ status: false, message: "'vaccination status', 'travel_history', 'shortness of breath', 'cough', 'fever', 'age', 'gender' fields are required!" });
         }
-        const data = await Traffic.create({
+        const data = await Helth.create({
             patient_id,
             age,
             gender,
@@ -134,7 +134,7 @@ const addHelthData = async (req, res) => {
             population_density,
             social_media_alerts
         });
-        return res.status(200).json({ status: true, message: "Added Helth Data", data });
+        return res.status(200).json({ status: true, message: "Added Helth Data" });
     } catch (err) {
         console.log("IotController, addTrafficData Error: ", err)
         return res.status(500).json({ status: false, message: "Internal Server Error!", err });

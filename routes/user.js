@@ -12,6 +12,40 @@ const { jwtMiddleware } = require("../middleware/AuthMiddleware");
 
 /**
  * @swagger
+ * /api/user/register:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [User]
+ *     description: Create a new user account
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Raju
+ *               email:
+ *                 type: string
+ *                 example: test@test.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *               conmirmpassword:
+ *                 type: string
+ *                 example: password123
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ *       400:
+ *         description: Email already registered or password mismatch
+ */
+router.post("/register", UserController.register);
+
+/**
+ * @swagger
  * /api/user/login:
  *   post:
  *     summary: User login
@@ -26,7 +60,7 @@ const { jwtMiddleware } = require("../middleware/AuthMiddleware");
  *             properties:
  *               email:
  *                 type: string
- *                 example: user@example.com
+ *                 example: test@test.com
  *               password:
  *                 type: string
  *                 example: password123
@@ -51,50 +85,18 @@ router.post("/login", UserController.login);
 
 /**
  * @swagger
- * /api/user/register:
- *   post:
- *     summary: Register a new user
- *     tags: [User]
- *     description: Create a new user account
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 example: John Doe
- *               email:
- *                 type: string
- *                 example: john@example.com
- *               password:
- *                 type: string
- *                 example: password123
- *               confirmPassword:
- *                 type: string
- *                 example: password123
- *     responses:
- *       201:
- *         description: User registered successfully
- *       400:
- *         description: Email already registered or password mismatch
- */
-router.post("/register", UserController.register);
-
-/**
- * @swagger
  * /api/user/dashboard:
  *   get:
  *     summary: Get dashboard data
  *     tags: [User]
  *     description: Retrieve dashboard statistics
  *     security:
- *       - bearerAuth: []
+ *      - bearerAuth: []
  *     responses:
  *       200:
  *         description: Dashboard data retrieved successfully
+ *       401:
+ *          description: Unauthorized
  */
 router.get("/dashboard", jwtMiddleware, UserController.dashboard);
 
@@ -131,16 +133,16 @@ router.get("/profile", jwtMiddleware, UserController.profile);
  *             properties:
  *               name:
  *                 type: string
- *                 example: John Doe
+ *                 example: Raju Kaju
  *               email:
  *                 type: string
- *                 example: john@example.com
+ *                 example: test@gmail.com
  *               password:
  *                 type: string
- *                 example: newpassword123
- *               confirmPassword:
+ *                 example: 12345678
+ *               conmirmpassword:
  *                 type: string
- *                 example: newpassword123
+ *                 example: 12345678
  *     responses:
  *       200:
  *         description: Profile updated successfully
