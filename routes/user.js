@@ -5,7 +5,7 @@ const { jwtMiddleware } = require('../middleware/AuthMiddleware');
 
 router.post('/login', UserController.login)
 router.post('/register', UserController.register)
-router.get('/dashboard', UserController.dashboard)
+router.get('/dashboard', jwtMiddleware, UserController.dashboard)
 router.get('/profile', jwtMiddleware, UserController.profile)
 router.post('/profile', jwtMiddleware, UserController.updateProfile)
 
