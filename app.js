@@ -3,6 +3,7 @@ const db = require('./config/db');
 const dotenv = require('dotenv');
 const UserRoutes = require('./routes/user');
 const IoTRoutes = require('./routes/iot');
+const cors = require('cors');
 
 const app = express();
 
