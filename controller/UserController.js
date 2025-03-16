@@ -5,14 +5,10 @@ const login = async (req, res) => {
     try{
         const { email, password } = req.body;
         const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(404).json({ status: false, message: "User not found!" });
+        if(!user || !(await user.comparePassword(password))) {
+            return res.status(401).json({ status: false, message: "User not Found with is credentials"});
         }
-        const isMatch = await user.comparePassword(password);
-        if (!isMatch) {
-            return res.status(401).json({ status: false, message: "Invalid credentials!" });
-        }
-        const token = jwt.generateToken(user);
+        const token = jwt.generateToken({ id: user._id, email: user.email });
         return res.status(200).json({ status: true, message: "User Login Successfully!", token });
     } catch(err){
         console.log("UserController, login Error: ",err)
@@ -52,7 +48,7 @@ const dashboard = async (req, res) => {
 const profile = async (req, res) => {
     try {
         const id = req.user.id;
-        const UserData = User.findOne({ _id: id });
+        const UserData = await User.findOne({ _id: id }, { password: 0, date: 0, __v: 0 });
         return res.status(200).json({ status: true, message: "Opration success!", data: UserData });
     } catch(err){
         console.log("UserController, profile Error: ",err)
